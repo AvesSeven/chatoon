@@ -4,10 +4,11 @@ import fr.uphf.technoweb.chatoon.chat.bdd.Chat;
 import fr.uphf.technoweb.chatoon.personne.bdd.Personne;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-public class Commentaire {
+public class Commentaire implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int idCommentaire;

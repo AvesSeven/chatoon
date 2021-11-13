@@ -86,12 +86,12 @@ public class ChatResource {
         return Response.noContent().build();
     }
 
-    @GET
-    @Path("{idChat}/commentaires")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Commentaire> listerCommentaire(@PathParam("idChat") Long id) {
-        return chatRepository.findById(id).get().getCommentaireChat();
-    }
+//    @GET
+//    @Path("{idChat}/commentaires")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public List<Commentaire> listerCommentaire(@PathParam("idChat") Long id) {
+//        return chatRepository.findById(id).get().getCommentaireChat();
+//    }
 
     @GET
     @Path("{idChat}/personne")

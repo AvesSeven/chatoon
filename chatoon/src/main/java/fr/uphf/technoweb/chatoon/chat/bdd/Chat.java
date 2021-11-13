@@ -4,11 +4,12 @@ import fr.uphf.technoweb.chatoon.commentaire.bdd.Commentaire;
 import fr.uphf.technoweb.chatoon.personne.bdd.Personne;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Chat {
+public class Chat implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int idChat;
@@ -16,15 +17,15 @@ public class Chat {
     //private String photoChat;
     private String descriptionChat;
     //private int cptLikeChat;
-    @OneToMany
-    private List<Commentaire> commentaireChat;
+//    @OneToMany
+//    private List<Commentaire> commentaireChat;
 
     @ManyToOne
     private Personne personneChat;
 
     public Chat() {
         super();
-        this.commentaireChat = new ArrayList<>();
+//        this.commentaireChat = new ArrayList<>();
     }
 
     public int getIdChat() {
@@ -66,14 +67,14 @@ public class Chat {
 //    public void setCptLikeChat(int cptLikeChat) {
 //        this.cptLikeChat = cptLikeChat;
 //    }
-
-    public List<Commentaire> getCommentaireChat() {
-        return commentaireChat;
-    }
-
-    public void setCommentaireChat(List<Commentaire> commentaireChat) {
-        this.commentaireChat = commentaireChat;
-    }
+//
+//    public List<Commentaire> getCommentaireChat() {
+//        return commentaireChat;
+//    }
+//
+//    public void setCommentaireChat(List<Commentaire> commentaireChat) {
+//        this.commentaireChat = commentaireChat;
+//    }
 
     public Personne getPersonneChat() {
         return personneChat;
