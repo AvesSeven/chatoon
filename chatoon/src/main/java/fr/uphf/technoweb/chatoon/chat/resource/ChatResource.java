@@ -2,15 +2,14 @@ package fr.uphf.technoweb.chatoon.chat.resource;
 
 import fr.uphf.technoweb.chatoon.chat.bdd.Chat;
 import fr.uphf.technoweb.chatoon.chat.bdd.ChatRepository;
-import fr.uphf.technoweb.chatoon.commentaire.bdd.Commentaire;
-import fr.uphf.technoweb.chatoon.personne.bdd.Personne;
-import fr.uphf.technoweb.chatoon.personne.bdd.PersonneRepository;
+import fr.uphf.technoweb.chatoon.chat.dto.ChatDTO;
+import fr.uphf.technoweb.chatoon.chat.dto.ChatDetailDTO;
+import fr.uphf.technoweb.chatoon.utils.ChatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +17,6 @@ import java.util.Optional;
 public class ChatResource {
     @Autowired
     private ChatRepository chatRepository;
-    @Autowired
-    private PersonneRepository personneRepository;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -30,10 +27,9 @@ public class ChatResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Chat> listerChat() {
-        List<Chat> chats = new ArrayList<>();
-        chatRepository.findAll().forEach(chats::add);
-        return chats;
+    public List<ChatDTO> listerChat() {
+        Iterable<Chat> chats = chatRepository.findAll();
+        return ChatUtils.chatToChatDTO(chats);
     }
 
     @GET
@@ -42,7 +38,8 @@ public class ChatResource {
     public Response getChatById(@PathParam("idChat") Long id) {
         Optional<Chat> chat = chatRepository.findById(id);
         if (chat.isPresent()) {
-            return Response.ok(chat.get()).build();
+            ChatDetailDTO chatDetailDTO = new ChatDetailDTO(chat.get());
+            return Response.ok(chatDetailDTO).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -53,7 +50,7 @@ public class ChatResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Chat updateChat(@PathParam("idChat") long id, Chat chat) {
-        chat.setIdChat((int)id);
+        chat.setIdChat(id);
         return chatRepository.save(chat);
     }
 
@@ -84,19 +81,5 @@ public class ChatResource {
             chatRepository.deleteById(id);
         }
         return Response.noContent().build();
-    }
-
-//    @GET
-//    @Path("{idChat}/commentaires")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public List<Commentaire> listerCommentaire(@PathParam("idChat") Long id) {
-//        return chatRepository.findById(id).get().getCommentaireChat();
-//    }
-
-    @GET
-    @Path("{idChat}/personne")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Personne afficherPersonne(@PathParam("idChat") Long id) {
-        return chatRepository.findById(id).get().getPersonneChat();
     }
 }

@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class CommentaireResource {
     @Autowired
     private CommentaireRepository commentaireRepository;
-    @Autowired
-    private ChatRepository chatRepository;
-    @Autowired
-    private PersonneRepository personneRepository;
-
-
+//    @Autowired
+//    private ChatRepository chatRepository;
+//    @Autowired
+//    private PersonneRepository personneRepository;
 }

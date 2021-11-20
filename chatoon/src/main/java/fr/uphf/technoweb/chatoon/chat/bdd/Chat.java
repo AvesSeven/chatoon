@@ -12,27 +12,25 @@ import java.util.List;
 public class Chat implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int idChat;
+    private Long idChat;
     private String nomChat;
-    //private String photoChat;
+    private String photoChat;
     private String descriptionChat;
-    //private int cptLikeChat;
-//    @OneToMany
-//    private List<Commentaire> commentaireChat;
-
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Commentaire> commentaireChat;
     @ManyToOne
     private Personne personneChat;
 
     public Chat() {
         super();
-//        this.commentaireChat = new ArrayList<>();
+        this.commentaireChat = new ArrayList<>();
     }
 
-    public int getIdChat() {
+    public Long getIdChat() {
         return idChat;
     }
 
-    public void setIdChat(int idChat) {
+    public void setIdChat(Long idChat) {
         this.idChat = idChat;
     }
 
@@ -44,13 +42,13 @@ public class Chat implements Serializable {
         this.nomChat = nomChat;
     }
 
-//    public String getPhotoChat() {
-//        return photoChat;
-//    }
-//
-//    public void setPhotoChat(String photoChat) {
-//        this.photoChat = photoChat;
-//    }
+    public String getPhotoChat() {
+        return photoChat;
+    }
+
+    public void setPhotoChat(String photoChat) {
+        this.photoChat = photoChat;
+    }
 
     public String getDescriptionChat() {
         return descriptionChat;
@@ -60,21 +58,13 @@ public class Chat implements Serializable {
         this.descriptionChat = descriptionChat;
     }
 
-//    public int getCptLikeChat() {
-//        return cptLikeChat;
-//    }
-//
-//    public void setCptLikeChat(int cptLikeChat) {
-//        this.cptLikeChat = cptLikeChat;
-//    }
-//
-//    public List<Commentaire> getCommentaireChat() {
-//        return commentaireChat;
-//    }
-//
-//    public void setCommentaireChat(List<Commentaire> commentaireChat) {
-//        this.commentaireChat = commentaireChat;
-//    }
+    public List<Commentaire> getCommentaireChat() {
+        return commentaireChat;
+    }
+
+    public void setCommentaireChat(List<Commentaire> commentaireChat) {
+        this.commentaireChat = commentaireChat;
+    }
 
     public Personne getPersonneChat() {
         return personneChat;

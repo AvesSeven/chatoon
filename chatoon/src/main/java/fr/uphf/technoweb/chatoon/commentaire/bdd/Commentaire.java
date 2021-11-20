@@ -11,8 +11,9 @@ import java.time.LocalDate;
 public class Commentaire implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int idCommentaire;
+    private Long idCommentaire;
     private LocalDate dateCommentaire;
+    private String commentaire;
     @ManyToOne
     private Chat chatCommentaire;
     @ManyToOne
@@ -22,11 +23,11 @@ public class Commentaire implements Serializable {
         super();
     }
 
-    public int getIdCommentaire() {
+    public Long getIdCommentaire() {
         return idCommentaire;
     }
 
-    public void setIdCommentaire(int idCommentaire) {
+    public void setIdCommentaire(Long idCommentaire) {
         this.idCommentaire = idCommentaire;
     }
 
@@ -38,11 +39,11 @@ public class Commentaire implements Serializable {
         this.dateCommentaire = dateCommentaire;
     }
 
-    public Chat getChatCommentaire() {
+    public fr.uphf.technoweb.chatoon.chat.bdd.Chat getChatCommentaire() {
         return chatCommentaire;
     }
 
-    public void setChatCommentaire(Chat chatCommentaire) {
+    public void setChatCommentaire(fr.uphf.technoweb.chatoon.chat.bdd.Chat chatCommentaire) {
         this.chatCommentaire = chatCommentaire;
     }
 
@@ -52,5 +53,13 @@ public class Commentaire implements Serializable {
 
     public void setPersonneCommentaire(Personne personneCommentaire) {
         this.personneCommentaire = personneCommentaire;
+    }
+
+    public String getCommentaire() {
+        return commentaire;
+    }
+
+    public void setCommentaire(String commentaire) {
+        this.commentaire = commentaire;
     }
 }

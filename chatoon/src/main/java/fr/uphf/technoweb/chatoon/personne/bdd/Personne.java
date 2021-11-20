@@ -11,22 +11,22 @@ import java.util.List;
 public class Personne implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int idPersonne;
+    private Long idPersonne;
     private String pseudoPersonne;
-    private String passwordPersonne;
-//    @OneToMany
-//    private List<Chat> chatsPersonne;
+//    private String passwordPersonne;
+    @OneToMany
+    private List<Chat> chatsPersonne;
 
     public Personne() {
         super();
-//        this.chatsPersonne = new ArrayList<>();
+        this.chatsPersonne = new ArrayList<>();
     }
 
-    public int getIdPersonne() {
+    public Long getIdPersonne() {
         return idPersonne;
     }
 
-    public void setIdPersonne(int idPersonne) {
+    public void setIdPersonne(Long idPersonne) {
         this.idPersonne = idPersonne;
     }
 
@@ -38,11 +38,11 @@ public class Personne implements Serializable {
         this.pseudoPersonne = pseudoPersonne;
     }
 
-    public String getPasswordPersonne() {
-        return passwordPersonne;
-    }
-
-    public void setPasswordPersonne(String passwordPersonne) {
-        this.passwordPersonne = passwordPersonne;
-    }
+//    public String getPasswordPersonne() {
+//        return passwordPersonne;
+//    }
+//
+//    public void setPasswordPersonne(String passwordPersonne) {
+//        this.passwordPersonne = passwordPersonne;
+//    }
 }
