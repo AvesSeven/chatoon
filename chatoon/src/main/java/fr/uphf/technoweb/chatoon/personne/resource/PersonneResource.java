@@ -3,6 +3,7 @@ package fr.uphf.technoweb.chatoon.personne.resource;
 import fr.uphf.technoweb.chatoon.personne.bdd.Personne;
 import fr.uphf.technoweb.chatoon.personne.bdd.PersonneRepository;
 import fr.uphf.technoweb.chatoon.personne.dto.PersonneDTO;
+import fr.uphf.technoweb.chatoon.personne.dto.PersonneDetailDTO;
 import fr.uphf.technoweb.chatoon.utils.PersonneUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,8 +21,8 @@ public class PersonneResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Personne creerPersonne(Personne personne) {
-        return personneRepository.save(personne);
+    public PersonneDetailDTO creerPersonne(Personne personne) {
+        return new PersonneDetailDTO(personneRepository.save(personne));
     }
 
     @GET
@@ -37,8 +38,8 @@ public class PersonneResource {
     public Response getPersonneById(@PathParam("idPersonne") Long id) {
         Optional<Personne> personne = personneRepository.findById(id);
         if (personne.isPresent()) {
-            PersonneDTO personneDTO = new PersonneDTO(personne.get());
-            return Response.ok(personneDTO).build();
+            PersonneDetailDTO personneDetailDTO = new PersonneDetailDTO(personne.get());
+            return Response.ok(personneDetailDTO).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

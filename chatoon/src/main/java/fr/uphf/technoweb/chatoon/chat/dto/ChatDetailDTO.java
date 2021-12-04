@@ -5,13 +5,16 @@ import fr.uphf.technoweb.chatoon.commentaire.dto.CommentaireDTO;
 import fr.uphf.technoweb.chatoon.personne.dto.PersonneDTO;
 import fr.uphf.technoweb.chatoon.utils.CommentaireUtils;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class ChatDetailDTO extends ChatDTO implements Serializable {
+public class ChatDetailDTO extends ChatDTO {
     private String description;
     private List<CommentaireDTO> commentaires;
     private PersonneDTO personne;
+
+    public ChatDetailDTO() {
+        super();
+    }
 
     public ChatDetailDTO(Chat chat) {
         super(chat);

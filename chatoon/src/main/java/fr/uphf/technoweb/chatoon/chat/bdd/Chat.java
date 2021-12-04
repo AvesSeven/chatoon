@@ -16,7 +16,7 @@ public class Chat implements Serializable {
     private String nomChat;
     private String photoChat;
     private String descriptionChat;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="chatCommentaire")
     private List<Commentaire> commentaireChat;
     @ManyToOne
     private Personne personneChat;

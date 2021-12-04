@@ -4,12 +4,18 @@ import fr.uphf.technoweb.chatoon.chat.bdd.Chat;
 import fr.uphf.technoweb.chatoon.chat.bdd.ChatRepository;
 import fr.uphf.technoweb.chatoon.chat.dto.ChatDTO;
 import fr.uphf.technoweb.chatoon.chat.dto.ChatDetailDTO;
+import fr.uphf.technoweb.chatoon.commentaire.bdd.Commentaire;
+import fr.uphf.technoweb.chatoon.commentaire.bdd.CommentaireRepository;
+import fr.uphf.technoweb.chatoon.commentaire.dto.CommentaireDTO;
+import fr.uphf.technoweb.chatoon.personne.bdd.Personne;
+import fr.uphf.technoweb.chatoon.personne.bdd.PersonneRepository;
 import fr.uphf.technoweb.chatoon.utils.ChatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,12 +23,16 @@ import java.util.Optional;
 public class ChatResource {
     @Autowired
     private ChatRepository chatRepository;
+    @Autowired
+    private CommentaireRepository commentaireRepository;
+    @Autowired
+    private PersonneRepository personneRepository;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Chat creerChat(Chat chat) {
-        return chatRepository.save(chat);
+    public ChatDetailDTO creerChat(Chat chatInput) {
+        return new ChatDetailDTO(chatRepository.save(chatInput));
     }
 
     @GET
@@ -43,6 +53,31 @@ public class ChatResource {
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+    }
+
+    @POST
+    @Path("{idChat}/commentaires")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response creerCommentaire(@PathParam("idChat") Long idChat, CommentaireDTO commentaireDTO) {
+        Commentaire commentaire = new Commentaire();
+        commentaire.setCommentaire(commentaireDTO.getCommentaire());
+        Optional<Chat> chat = chatRepository.findById(idChat);
+        if (chat.isPresent()) {
+            commentaire.setChatCommentaire(chat.get());
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        commentaire.setDateCommentaire(LocalDate.now());
+
+        Optional<Personne> personne = personneRepository.findById(commentaireDTO.getPersonne().getId());
+        if(personne.isPresent()){
+            commentaire.setPersonneCommentaire(personne.get());
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return Response.ok(new CommentaireDTO(commentaireRepository.save(commentaire))).build();
     }
 
     @PUT

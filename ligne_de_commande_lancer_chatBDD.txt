@@ -1,1 +1,2 @@
+Lancer le terminal dans le dossier chatoon qui se trouve dans hsqldb-2.5.1/hsqldb
 java -cp ../lib/hsqldb.jar org.hsqldb.server.Server --database.0 file:mydb --dbname.0 chatBDD

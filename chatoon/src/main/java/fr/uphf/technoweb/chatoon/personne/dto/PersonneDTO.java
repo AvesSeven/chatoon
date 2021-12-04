@@ -6,6 +6,10 @@ public class PersonneDTO {
     private Long id;
     private String pseudo;
 
+    public PersonneDTO() {
+        super();
+    }
+
     public PersonneDTO(Personne personne) {
         this.id = personne.getIdPersonne();
         this.pseudo = personne.getPseudoPersonne();
@@ -26,4 +30,5 @@ public class PersonneDTO {
     public void setPseudo(String pseudo) {
         this.pseudo = pseudo;
     }
+
 }

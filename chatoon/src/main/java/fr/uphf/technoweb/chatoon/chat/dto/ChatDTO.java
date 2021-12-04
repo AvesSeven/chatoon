@@ -4,10 +4,14 @@ import fr.uphf.technoweb.chatoon.chat.bdd.Chat;
 
 import java.io.Serializable;
 
-public class ChatDTO implements Serializable {
+public class ChatDTO {
     private Long id;
     private String nom;
     private String photo;
+
+    public ChatDTO() {
+        super();
+    }
 
     public ChatDTO(Chat chat) {
         this.id = chat.getIdChat();

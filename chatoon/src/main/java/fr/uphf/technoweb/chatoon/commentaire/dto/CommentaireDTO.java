@@ -11,6 +11,10 @@ public class CommentaireDTO {
     private String commentaire;
     private PersonneDTO personne;
 
+    public CommentaireDTO() {
+        super();
+    }
+
     public CommentaireDTO(Commentaire commentaire) {
         this.id = commentaire.getIdCommentaire();
         this.date = commentaire.getDateCommentaire();
