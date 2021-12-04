@@ -63,49 +63,67 @@ public class ChatResource {
         Commentaire commentaire = new Commentaire();
         commentaire.setCommentaire(commentaireDTO.getCommentaire());
         Optional<Chat> chat = chatRepository.findById(idChat);
+
         if (chat.isPresent()) {
             commentaire.setChatCommentaire(chat.get());
+            commentaire.setDateCommentaire(LocalDate.now());
+            Optional<Personne> personne = personneRepository.findById(commentaireDTO.getPersonne().getId());
+
+            if(personne.isPresent()){
+                commentaire.setPersonneCommentaire(personne.get());
+            } else {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+
+            return Response.ok(new CommentaireDTO(commentaireRepository.save(commentaire))).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        commentaire.setDateCommentaire(LocalDate.now());
-
-        Optional<Personne> personne = personneRepository.findById(commentaireDTO.getPersonne().getId());
-        if(personne.isPresent()){
-            commentaire.setPersonneCommentaire(personne.get());
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-
-        return Response.ok(new CommentaireDTO(commentaireRepository.save(commentaire))).build();
     }
 
     @PUT
     @Path("{idChat}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Chat updateChat(@PathParam("idChat") long id, Chat chat) {
-        chat.setIdChat(id);
-        return chatRepository.save(chat);
+    public Response updateChat(@PathParam("idChat") long id, Chat chat) {
+        if (chatRepository.findById(id).isPresent() && personneRepository.findById(chat.getPersonneChat().getIdPersonne()).isPresent()) {
+            chat.setIdChat(id);
+            chatRepository.save(chat);
+            return Response.ok(new ChatDTO(chat)).build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 
     @PATCH
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{idChat}")
-    public Response updateNom(@PathParam("idChat") Long id, Chat chat) {
-        String description = chat.getDescriptionChat();
-
+    public Response updateChat(@PathParam("idChat") Long id, Chat chat) {
         Optional<Chat> optional = chatRepository.findById(id);
 
         if (optional.isPresent()) {
             Chat chatBDD = optional.get();
-            chatBDD.setDescriptionChat(description);
+            if (chat.getNomChat() != null) {
+                chatBDD.setNomChat(chat.getNomChat());
+            }
+
+            if (chat.getDescriptionChat() != null) {
+                chatBDD.setDescriptionChat(chat.getDescriptionChat());
+            }
+
+            if (chat.getPhotoChat() != null) {
+                chatBDD.setPhotoChat(chat.getPhotoChat());
+            }
+
+            if (chat.getPersonneChat() != null) {
+                chatBDD.setPersonneChat(chat.getPersonneChat());
+            }
+
             chatRepository.save(chatBDD);
-            return Response.ok(chatBDD).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.ok(new ChatDetailDTO(chatBDD)).build();
         }
+
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 
     @DELETE
@@ -114,7 +132,8 @@ public class ChatResource {
     public Response deleteChat(@PathParam("idChat") Long id) {
         if (chatRepository.findById(id).isPresent()) {
             chatRepository.deleteById(id);
+            return Response.noContent().build();
         }
-        return Response.noContent().build();
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 }
