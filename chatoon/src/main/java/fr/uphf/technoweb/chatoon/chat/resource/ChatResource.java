@@ -32,7 +32,8 @@ public class ChatResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public ChatDetailDTO creerChat(Chat chatInput) {
-        return new ChatDetailDTO(chatRepository.save(chatInput));
+        chatRepository.save(chatInput);
+        return new ChatDetailDTO(chatInput);
     }
 
     @GET

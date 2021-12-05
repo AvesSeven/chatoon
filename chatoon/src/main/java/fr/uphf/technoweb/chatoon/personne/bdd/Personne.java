@@ -13,12 +13,11 @@ import java.util.List;
 @Entity
 public class Personne implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String pseudo;
 //    private String passwordPersonne;
     @OneToMany(mappedBy= "personne", cascade = CascadeType.REMOVE)
-    @Fetch(value=FetchMode.SELECT)
     private List<Chat> chats;
     @OneToMany(fetch = FetchType.EAGER, mappedBy= "personne", cascade = CascadeType.REMOVE)
     private List<Commentaire> commentaires;

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Entity
 public class Commentaire implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private LocalDate date;
     private String message;

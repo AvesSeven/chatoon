@@ -2,43 +2,36 @@ package fr.uphf.technoweb.chatoon.personne.resource;
 
 import fr.uphf.technoweb.chatoon.personne.PersonneService;
 import fr.uphf.technoweb.chatoon.personne.bdd.Personne;
-import fr.uphf.technoweb.chatoon.personne.bdd.PersonneRepository;
-import fr.uphf.technoweb.chatoon.personne.dto.PersonneDTO;
-import fr.uphf.technoweb.chatoon.personne.dto.PersonneDetailDTO;
-import fr.uphf.technoweb.chatoon.utils.PersonneUtils;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @Path("personnes")
 public class PersonneResource {
-    //@Autowired
-    private PersonneRepository personneRepository;
 
-    private PersonneService personneService;
+    private final PersonneService personneService;
 
-    public PersonneResource(PersonneService personneService, PersonneRepository personneRepository) {
+    public PersonneResource(PersonneService personneService) {
         this.personneService = personneService;
-        this.personneRepository = personneRepository;
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public PersonneDetailDTO creerPersonne(Personne personne) {
-        return new PersonneDetailDTO(personneRepository.save(personne));
+    public Response creerPersonne(Personne personne) {
+        if (personne.getPseudo() != null) {
+            return Response.ok(personneService.createPersonne(personne.getPseudo())).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<PersonneDTO> listerPersonne() {
-        Iterable<Personne> personnes = personneRepository.findAll();
-        return PersonneUtils.personneToPersonneDTO(personnes);
+    public Response listerPersonne() {
+        return Response.ok(personneService.get()).build();
     }
 
     @GET
@@ -46,8 +39,7 @@ public class PersonneResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPersonneById(@PathParam("idPersonne") Long id) {
         try {
-            PersonneDetailDTO personne = this.personneService.getPersonne(id);
-            return Response.ok(personne).build();
+            return Response.ok(personneService.getPersonne(id)).build();
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -58,12 +50,15 @@ public class PersonneResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePersonne(@PathParam("idPersonne") long id, Personne personne) {
-        if (personneRepository.findById(id).isPresent()) {
-            personne.setId(id);
-            personneRepository.save(personne);
-            return Response.ok(new PersonneDTO(personne)).build();
+        personne.setId(id);
+        if (personne.getPseudo() != null) {
+            try {
+                return Response.ok(personneService.update(personne)).build();
+            } catch (Exception e) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
         }
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return Response.status(Response.Status.BAD_REQUEST).build();
     }
 
     @PATCH
@@ -71,37 +66,26 @@ public class PersonneResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{idPersonne}")
     public Response updatePersonne(@PathParam("idPersonne") Long id, Personne personne) {
-        Optional<Personne> optional = personneRepository.findById(id);
-
-        if (optional.isPresent()) {
-            Personne personneBDD = optional.get();
-            if (personne.getPseudo() != null) {
-                personneBDD.setPseudo(personne.getPseudo());
+        personne.setId(id);
+        if (personne.getPseudo() != null) {
+            try {
+                return Response.ok(personneService.updatePartial(personne)).build();
+            } catch (Exception e) {
+                return Response.status(Response.Status.NOT_FOUND).build();
             }
-
-            if (personne.getChats() != null) {
-                personneBDD.setChats(personne.getChats());
-            }
-
-            if (personne.getCommentaires() != null) {
-                personneBDD.setCommentaires(personne.getCommentaires());
-            }
-
-            personneRepository.save(personneBDD);
-            return Response.ok(new PersonneDetailDTO(personneBDD)).build();
         }
-
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return Response.status(Response.Status.BAD_REQUEST).build();
     }
 
     @DELETE
     @Path("{idPersonne}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deletePersonne(@PathParam("idPersonne") Long idPersonne) {
-        if (personneRepository.findById(idPersonne).isPresent()) {
-            personneRepository.deleteById(idPersonne);
+    public Response deletePersonne(@PathParam("idPersonne") Long id) {
+        try {
+            personneService.delete(id);
             return Response.noContent().build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.status(Response.Status.NOT_FOUND).build();
     }
 }
