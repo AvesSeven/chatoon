@@ -1,13 +1,13 @@
 package fr.uphf.technoweb.chatoon.personne.resource;
 
-import fr.uphf.technoweb.chatoon.chat.bdd.Chat;
-import fr.uphf.technoweb.chatoon.chat.dto.ChatDetailDTO;
+import fr.uphf.technoweb.chatoon.personne.PersonneService;
 import fr.uphf.technoweb.chatoon.personne.bdd.Personne;
 import fr.uphf.technoweb.chatoon.personne.bdd.PersonneRepository;
 import fr.uphf.technoweb.chatoon.personne.dto.PersonneDTO;
 import fr.uphf.technoweb.chatoon.personne.dto.PersonneDetailDTO;
 import fr.uphf.technoweb.chatoon.utils.PersonneUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -15,10 +15,18 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Optional;
 
+@RestController
 @Path("personnes")
 public class PersonneResource {
-    @Autowired
+    //@Autowired
     private PersonneRepository personneRepository;
+
+    private PersonneService personneService;
+
+    public PersonneResource(PersonneService personneService, PersonneRepository personneRepository) {
+        this.personneService = personneService;
+        this.personneRepository = personneRepository;
+    }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -38,11 +46,10 @@ public class PersonneResource {
     @Path("{idPersonne}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPersonneById(@PathParam("idPersonne") Long id) {
-        Optional<Personne> personne = personneRepository.findById(id);
-        if (personne.isPresent()) {
-            PersonneDetailDTO personneDetailDTO = new PersonneDetailDTO(personne.get());
-            return Response.ok(personneDetailDTO).build();
-        } else {
+        try {
+            PersonneDetailDTO personne = this.personneService.getPersonne(id);
+            return Response.ok(personne).build();
+        } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }

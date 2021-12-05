@@ -60,22 +60,19 @@ public class ChatResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response creerCommentaire(@PathParam("idChat") Long idChat, CommentaireDTO commentaireDTO) {
-        Commentaire commentaire = new Commentaire();
-        commentaire.setCommentaire(commentaireDTO.getCommentaire());
         Optional<Chat> chat = chatRepository.findById(idChat);
+        Optional<Personne> personne = personneRepository.findById(commentaireDTO.getPersonne().getId());
 
-        if (chat.isPresent()) {
+        if (chat.isPresent() && personne.isPresent()) {
+            Commentaire commentaire = new Commentaire();
+            commentaire.setCommentaire(commentaireDTO.getCommentaire());
             commentaire.setChatCommentaire(chat.get());
+            commentaire.setPersonneCommentaire(personne.get());
             commentaire.setDateCommentaire(LocalDate.now());
-            Optional<Personne> personne = personneRepository.findById(commentaireDTO.getPersonne().getId());
 
-            if(personne.isPresent()){
-                commentaire.setPersonneCommentaire(personne.get());
-            } else {
-                return Response.status(Response.Status.NOT_FOUND).build();
-            }
+            commentaireRepository.save(commentaire);
 
-            return Response.ok(new CommentaireDTO(commentaireRepository.save(commentaire))).build();
+            return Response.ok(new CommentaireDTO(commentaire)).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
