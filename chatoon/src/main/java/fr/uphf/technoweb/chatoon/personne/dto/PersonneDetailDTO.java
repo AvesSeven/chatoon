@@ -19,7 +19,7 @@ public class PersonneDetailDTO extends PersonneDTO {
     public PersonneDetailDTO(Personne personne) {
         super(personne);
         this.chats = ChatUtils.chatToChatDTO(personne.getChats());
-        this.commentaires = CommentairePersonneUtils.commentairePersonneToCommentairePersonneDTO(personne.getCommentaires());
+        this.commentaires = CommentairePersonneUtils.commentaireToCommentairePersonneDTO(personne.getCommentaires());
     }
 
     public List<ChatDTO> getChats() {

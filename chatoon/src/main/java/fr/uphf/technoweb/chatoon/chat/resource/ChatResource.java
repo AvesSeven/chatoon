@@ -6,7 +6,7 @@ import fr.uphf.technoweb.chatoon.chat.dto.ChatDTO;
 import fr.uphf.technoweb.chatoon.chat.dto.ChatDetailDTO;
 import fr.uphf.technoweb.chatoon.commentaire.bdd.Commentaire;
 import fr.uphf.technoweb.chatoon.commentaire.bdd.CommentaireRepository;
-import fr.uphf.technoweb.chatoon.commentaire.dto.CommentaireDTO;
+import fr.uphf.technoweb.chatoon.commentaire.dto.CommentaireChatDTO;
 import fr.uphf.technoweb.chatoon.personne.bdd.Personne;
 import fr.uphf.technoweb.chatoon.personne.bdd.PersonneRepository;
 import fr.uphf.technoweb.chatoon.utils.ChatUtils;
@@ -59,20 +59,20 @@ public class ChatResource {
     @Path("{idChat}/commentaires")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response creerCommentaire(@PathParam("idChat") Long idChat, CommentaireDTO commentaireDTO) {
+    public Response creerCommentaire(@PathParam("idChat") Long idChat, CommentaireChatDTO commentaireChatDTO) {
         Optional<Chat> chat = chatRepository.findById(idChat);
-        Optional<Personne> personne = personneRepository.findById(commentaireDTO.getPersonne().getId());
+        Optional<Personne> personne = personneRepository.findById(commentaireChatDTO.getPersonne().getId());
 
         if (chat.isPresent() && personne.isPresent()) {
             Commentaire commentaire = new Commentaire();
-            commentaire.setMessage(commentaireDTO.getMessage());
+            commentaire.setMessage(commentaireChatDTO.getMessage());
             commentaire.setChat(chat.get());
             commentaire.setPersonne(personne.get());
             commentaire.setDate(LocalDate.now());
 
             commentaireRepository.save(commentaire);
 
-            return Response.ok(new CommentaireDTO(commentaire)).build();
+            return Response.ok(new CommentaireChatDTO(commentaire)).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

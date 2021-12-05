@@ -5,17 +5,17 @@ import fr.uphf.technoweb.chatoon.personne.dto.PersonneDTO;
 
 import java.time.LocalDate;
 
-public class CommentaireDTO {
+public class CommentaireChatDTO {
     private Long id;
     private LocalDate date;
     private String message;
     private PersonneDTO personne;
 
-    public CommentaireDTO() {
+    public CommentaireChatDTO() {
         super();
     }
 
-    public CommentaireDTO(Commentaire commentaire) {
+    public CommentaireChatDTO(Commentaire commentaire) {
         this.id = commentaire.getId();
         this.date = commentaire.getDate();
         this.message = commentaire.getMessage();

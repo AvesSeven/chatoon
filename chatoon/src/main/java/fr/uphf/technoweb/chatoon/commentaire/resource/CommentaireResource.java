@@ -4,7 +4,7 @@ import fr.uphf.technoweb.chatoon.chat.bdd.Chat;
 import fr.uphf.technoweb.chatoon.chat.bdd.ChatRepository;
 import fr.uphf.technoweb.chatoon.commentaire.bdd.Commentaire;
 import fr.uphf.technoweb.chatoon.commentaire.bdd.CommentaireRepository;
-import fr.uphf.technoweb.chatoon.commentaire.dto.CommentaireDTO;
+import fr.uphf.technoweb.chatoon.commentaire.dto.CommentaireChatDTO;
 import fr.uphf.technoweb.chatoon.personne.bdd.Personne;
 import fr.uphf.technoweb.chatoon.personne.bdd.PersonneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class CommentaireResource {
             commentaire.setPersonne(optionalPersonne.get());
             commentaire.setChat(optionalChat.get());
             commentaireRepository.save(commentaire);
-            return Response.ok(new CommentaireDTO(commentaire)).build();
+            return Response.ok(new CommentaireChatDTO(commentaire)).build();
         }
         return Response.status(Response.Status.NOT_FOUND).build();
     }
@@ -58,7 +58,7 @@ public class CommentaireResource {
             }
 
             commentaireRepository.save(commentaireBDD);
-            return Response.ok(new CommentaireDTO(commentaireBDD)).build();
+            return Response.ok(new CommentaireChatDTO(commentaireBDD)).build();
         }
 
         return Response.status(Response.Status.NOT_FOUND).build();

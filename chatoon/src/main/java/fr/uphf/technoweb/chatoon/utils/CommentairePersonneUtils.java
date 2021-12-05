@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommentairePersonneUtils {
-    public static List<CommentairePersonneDTO> commentairePersonneToCommentairePersonneDTO(Iterable<Commentaire> commentaires) {
+    public static List<CommentairePersonneDTO> commentaireToCommentairePersonneDTO(Iterable<Commentaire> commentaires) {
         List<CommentairePersonneDTO> commentairesTemp = new ArrayList<>();
 
         commentaires.forEach((commentaire) -> {
