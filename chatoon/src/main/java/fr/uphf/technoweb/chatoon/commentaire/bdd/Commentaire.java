@@ -11,55 +11,55 @@ import java.time.LocalDate;
 public class Commentaire implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long idCommentaire;
-    private LocalDate dateCommentaire;
-    private String commentaire;
+    private Long id;
+    private LocalDate date;
+    private String message;
     @ManyToOne
-    private Chat chatCommentaire;
+    private Chat chat;
     @ManyToOne
-    private Personne personneCommentaire;
+    private Personne personne;
 
     public Commentaire() {
         super();
     }
 
-    public Long getIdCommentaire() {
-        return idCommentaire;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdCommentaire(Long idCommentaire) {
-        this.idCommentaire = idCommentaire;
+    public void setId(Long idCommentaire) {
+        this.id = idCommentaire;
     }
 
-    public LocalDate getDateCommentaire() {
-        return dateCommentaire;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateCommentaire(LocalDate dateCommentaire) {
-        this.dateCommentaire = dateCommentaire;
+    public void setDate(LocalDate dateCommentaire) {
+        this.date = dateCommentaire;
     }
 
-    public fr.uphf.technoweb.chatoon.chat.bdd.Chat getChatCommentaire() {
-        return chatCommentaire;
+    public fr.uphf.technoweb.chatoon.chat.bdd.Chat getChat() {
+        return chat;
     }
 
-    public void setChatCommentaire(fr.uphf.technoweb.chatoon.chat.bdd.Chat chatCommentaire) {
-        this.chatCommentaire = chatCommentaire;
+    public void setChat(fr.uphf.technoweb.chatoon.chat.bdd.Chat chatCommentaire) {
+        this.chat = chatCommentaire;
     }
 
-    public Personne getPersonneCommentaire() {
-        return personneCommentaire;
+    public Personne getPersonne() {
+        return personne;
     }
 
-    public void setPersonneCommentaire(Personne personneCommentaire) {
-        this.personneCommentaire = personneCommentaire;
+    public void setPersonne(Personne personneCommentaire) {
+        this.personne = personneCommentaire;
     }
 
-    public String getCommentaire() {
-        return commentaire;
+    public String getMessage() {
+        return message;
     }
 
-    public void setCommentaire(String commentaire) {
-        this.commentaire = commentaire;
+    public void setMessage(String commentaire) {
+        this.message = commentaire;
     }
 }

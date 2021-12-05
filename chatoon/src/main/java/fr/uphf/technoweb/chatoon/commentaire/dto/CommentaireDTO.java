@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class CommentaireDTO {
     private Long id;
     private LocalDate date;
-    private String commentaire;
+    private String message;
     private PersonneDTO personne;
 
     public CommentaireDTO() {
@@ -16,10 +16,10 @@ public class CommentaireDTO {
     }
 
     public CommentaireDTO(Commentaire commentaire) {
-        this.id = commentaire.getIdCommentaire();
-        this.date = commentaire.getDateCommentaire();
-        this.commentaire = commentaire.getCommentaire();
-        this.personne = new PersonneDTO(commentaire.getPersonneCommentaire());
+        this.id = commentaire.getId();
+        this.date = commentaire.getDate();
+        this.message = commentaire.getMessage();
+        this.personne = new PersonneDTO(commentaire.getPersonne());
     }
 
     public Long getId() {
@@ -38,12 +38,12 @@ public class CommentaireDTO {
         this.date = date;
     }
 
-    public String getCommentaire() {
-        return commentaire;
+    public String getMessage() {
+        return message;
     }
 
-    public void setCommentaire(String commentaire) {
-        this.commentaire = commentaire;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public PersonneDTO getPersonne() {

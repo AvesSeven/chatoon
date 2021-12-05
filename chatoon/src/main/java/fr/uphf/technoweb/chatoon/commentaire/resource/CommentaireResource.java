@@ -30,14 +30,14 @@ public class CommentaireResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateCommentaire(@PathParam("idCommentaire") long id, Commentaire commentaire) {
         Optional<Commentaire> optionalCommentaire = commentaireRepository.findById(id);
-        Optional<Personne> optionalPersonne = personneRepository.findById(commentaire.getPersonneCommentaire().getIdPersonne());
-        Optional<Chat> optionalChat = chatRepository.findById(commentaire.getChatCommentaire().getId());
+        Optional<Personne> optionalPersonne = personneRepository.findById(commentaire.getPersonne().getIdPersonne());
+        Optional<Chat> optionalChat = chatRepository.findById(commentaire.getChat().getId());
 
         if (optionalCommentaire.isPresent() && optionalPersonne.isPresent() && optionalChat.isPresent()) {
-            commentaire.setIdCommentaire(id);
-            commentaire.setDateCommentaire(LocalDate.now());
-            commentaire.setPersonneCommentaire(optionalPersonne.get());
-            commentaire.setChatCommentaire(optionalChat.get());
+            commentaire.setId(id);
+            commentaire.setDate(LocalDate.now());
+            commentaire.setPersonne(optionalPersonne.get());
+            commentaire.setChat(optionalChat.get());
             commentaireRepository.save(commentaire);
             return Response.ok(new CommentaireDTO(commentaire)).build();
         }
@@ -53,8 +53,8 @@ public class CommentaireResource {
 
         if (optional.isPresent()) {
             Commentaire commentaireBDD = optional.get();
-            if (commentaire.getCommentaire() != null) {
-                commentaireBDD.setCommentaire(commentaire.getCommentaire());
+            if (commentaire.getMessage() != null) {
+                commentaireBDD.setMessage(commentaire.getMessage());
             }
 
             commentaireRepository.save(commentaireBDD);

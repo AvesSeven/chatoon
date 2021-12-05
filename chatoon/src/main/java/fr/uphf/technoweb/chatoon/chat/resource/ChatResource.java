@@ -65,10 +65,10 @@ public class ChatResource {
 
         if (chat.isPresent() && personne.isPresent()) {
             Commentaire commentaire = new Commentaire();
-            commentaire.setCommentaire(commentaireDTO.getCommentaire());
-            commentaire.setChatCommentaire(chat.get());
-            commentaire.setPersonneCommentaire(personne.get());
-            commentaire.setDateCommentaire(LocalDate.now());
+            commentaire.setMessage(commentaireDTO.getMessage());
+            commentaire.setChat(chat.get());
+            commentaire.setPersonne(personne.get());
+            commentaire.setDate(LocalDate.now());
 
             commentaireRepository.save(commentaire);
 

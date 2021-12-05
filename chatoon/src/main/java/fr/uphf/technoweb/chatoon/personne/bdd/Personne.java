@@ -20,7 +20,7 @@ public class Personne implements Serializable {
     @OneToMany(mappedBy= "personne", cascade = CascadeType.REMOVE)
     @Fetch(value=FetchMode.SELECT)
     private List<Chat> chatsPersonne;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy="personneCommentaire", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy= "personne", cascade = CascadeType.REMOVE)
     private List<Commentaire> commentairesPersonne;
 
     public Personne() {
