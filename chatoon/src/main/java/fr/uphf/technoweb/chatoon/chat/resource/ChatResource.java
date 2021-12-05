@@ -83,8 +83,8 @@ public class ChatResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateChat(@PathParam("idChat") long id, Chat chat) {
-        if (chatRepository.findById(id).isPresent() && personneRepository.findById(chat.getPersonneChat().getIdPersonne()).isPresent()) {
-            chat.setIdChat(id);
+        if (chatRepository.findById(id).isPresent() && personneRepository.findById(chat.getPersonne().getIdPersonne()).isPresent()) {
+            chat.setId(id);
             chatRepository.save(chat);
             return Response.ok(new ChatDTO(chat)).build();
         }
@@ -100,20 +100,20 @@ public class ChatResource {
 
         if (optional.isPresent()) {
             Chat chatBDD = optional.get();
-            if (chat.getNomChat() != null) {
-                chatBDD.setNomChat(chat.getNomChat());
+            if (chat.getNom() != null) {
+                chatBDD.setNom(chat.getNom());
             }
 
-            if (chat.getDescriptionChat() != null) {
-                chatBDD.setDescriptionChat(chat.getDescriptionChat());
+            if (chat.getDescription() != null) {
+                chatBDD.setDescription(chat.getDescription());
             }
 
-            if (chat.getPhotoChat() != null) {
-                chatBDD.setPhotoChat(chat.getPhotoChat());
+            if (chat.getPhoto() != null) {
+                chatBDD.setPhoto(chat.getPhoto());
             }
 
-            if (chat.getPersonneChat() != null) {
-                chatBDD.setPersonneChat(chat.getPersonneChat());
+            if (chat.getPersonne() != null) {
+                chatBDD.setPersonne(chat.getPersonne());
             }
 
             chatRepository.save(chatBDD);

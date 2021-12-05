@@ -18,9 +18,9 @@ public class ChatDetailDTO extends ChatDTO {
 
     public ChatDetailDTO(Chat chat) {
         super(chat);
-        this.description = chat.getDescriptionChat();
-        this.commentaires = CommentaireUtils.commentaireToCommentaireDTO(chat.getCommentaireChat());
-        this.personne = new PersonneDTO(chat.getPersonneChat());
+        this.description = chat.getDescription();
+        this.commentaires = CommentaireUtils.commentaireToCommentaireDTO(chat.getCommentaires());
+        this.personne = new PersonneDTO(chat.getPersonne());
     }
 
     public String getDescription() {

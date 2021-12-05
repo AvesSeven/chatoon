@@ -31,7 +31,7 @@ public class CommentaireResource {
     public Response updateCommentaire(@PathParam("idCommentaire") long id, Commentaire commentaire) {
         Optional<Commentaire> optionalCommentaire = commentaireRepository.findById(id);
         Optional<Personne> optionalPersonne = personneRepository.findById(commentaire.getPersonneCommentaire().getIdPersonne());
-        Optional<Chat> optionalChat = chatRepository.findById(commentaire.getChatCommentaire().getIdChat());
+        Optional<Chat> optionalChat = chatRepository.findById(commentaire.getChatCommentaire().getId());
 
         if (optionalCommentaire.isPresent() && optionalPersonne.isPresent() && optionalChat.isPresent()) {
             commentaire.setIdCommentaire(id);

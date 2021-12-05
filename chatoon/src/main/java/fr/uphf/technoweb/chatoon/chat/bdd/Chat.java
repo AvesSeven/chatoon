@@ -12,65 +12,65 @@ import java.util.List;
 public class Chat implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long idChat;
-    private String nomChat;
-    private String photoChat;
-    private String descriptionChat;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy="chatCommentaire", cascade = CascadeType.REMOVE)
-    private List<Commentaire> commentaireChat;
+    private Long id;
+    private String nom;
+    private String photo;
+    private String description;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="chat", cascade = CascadeType.REMOVE)
+    private List<Commentaire> commentaires;
     @ManyToOne
-    private Personne personneChat;
+    private Personne personne;
 
     public Chat() {
         super();
-        this.commentaireChat = new ArrayList<>();
+        this.commentaires = new ArrayList<>();
     }
 
-    public Long getIdChat() {
-        return idChat;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdChat(Long idChat) {
-        this.idChat = idChat;
+    public void setId(Long idChat) {
+        this.id = idChat;
     }
 
-    public String getNomChat() {
-        return nomChat;
+    public String getNom() {
+        return nom;
     }
 
-    public void setNomChat(String nomChat) {
-        this.nomChat = nomChat;
+    public void setNom(String nomChat) {
+        this.nom = nomChat;
     }
 
-    public String getPhotoChat() {
-        return photoChat;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setPhotoChat(String photoChat) {
-        this.photoChat = photoChat;
+    public void setPhoto(String photoChat) {
+        this.photo = photoChat;
     }
 
-    public String getDescriptionChat() {
-        return descriptionChat;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriptionChat(String descriptionChat) {
-        this.descriptionChat = descriptionChat;
+    public void setDescription(String descriptionChat) {
+        this.description = descriptionChat;
     }
 
-    public List<Commentaire> getCommentaireChat() {
-        return commentaireChat;
+    public List<Commentaire> getCommentaires() {
+        return commentaires;
     }
 
-    public void setCommentaireChat(List<Commentaire> commentaireChat) {
-        this.commentaireChat = commentaireChat;
+    public void setCommentaires(List<Commentaire> commentaireChat) {
+        this.commentaires = commentaireChat;
     }
 
-    public Personne getPersonneChat() {
-        return personneChat;
+    public Personne getPersonne() {
+        return personne;
     }
 
-    public void setPersonneChat(Personne personneChat) {
-        this.personneChat = personneChat;
+    public void setPersonne(Personne personneChat) {
+        this.personne = personneChat;
     }
 }
