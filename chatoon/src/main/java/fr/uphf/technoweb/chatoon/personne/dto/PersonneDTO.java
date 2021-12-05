@@ -11,8 +11,8 @@ public class PersonneDTO {
     }
 
     public PersonneDTO(Personne personne) {
-        this.id = personne.getIdPersonne();
-        this.pseudo = personne.getPseudoPersonne();
+        this.id = personne.getId();
+        this.pseudo = personne.getPseudo();
     }
 
     public Long getId() {

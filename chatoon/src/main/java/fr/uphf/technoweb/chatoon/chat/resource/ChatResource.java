@@ -83,7 +83,7 @@ public class ChatResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateChat(@PathParam("idChat") long id, Chat chat) {
-        if (chatRepository.findById(id).isPresent() && personneRepository.findById(chat.getPersonne().getIdPersonne()).isPresent()) {
+        if (chatRepository.findById(id).isPresent() && personneRepository.findById(chat.getPersonne().getId()).isPresent()) {
             chat.setId(id);
             chatRepository.save(chat);
             return Response.ok(new ChatDTO(chat)).build();

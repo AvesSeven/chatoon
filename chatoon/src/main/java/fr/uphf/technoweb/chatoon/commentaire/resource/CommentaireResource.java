@@ -30,7 +30,7 @@ public class CommentaireResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateCommentaire(@PathParam("idCommentaire") long id, Commentaire commentaire) {
         Optional<Commentaire> optionalCommentaire = commentaireRepository.findById(id);
-        Optional<Personne> optionalPersonne = personneRepository.findById(commentaire.getPersonne().getIdPersonne());
+        Optional<Personne> optionalPersonne = personneRepository.findById(commentaire.getPersonne().getId());
         Optional<Chat> optionalChat = chatRepository.findById(commentaire.getChat().getId());
 
         if (optionalCommentaire.isPresent() && optionalPersonne.isPresent() && optionalChat.isPresent()) {

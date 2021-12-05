@@ -6,7 +6,6 @@ import fr.uphf.technoweb.chatoon.personne.bdd.PersonneRepository;
 import fr.uphf.technoweb.chatoon.personne.dto.PersonneDTO;
 import fr.uphf.technoweb.chatoon.personne.dto.PersonneDetailDTO;
 import fr.uphf.technoweb.chatoon.utils.PersonneUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.*;
@@ -60,7 +59,7 @@ public class PersonneResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePersonne(@PathParam("idPersonne") long id, Personne personne) {
         if (personneRepository.findById(id).isPresent()) {
-            personne.setIdPersonne(id);
+            personne.setId(id);
             personneRepository.save(personne);
             return Response.ok(new PersonneDTO(personne)).build();
         }
@@ -76,16 +75,16 @@ public class PersonneResource {
 
         if (optional.isPresent()) {
             Personne personneBDD = optional.get();
-            if (personne.getPseudoPersonne() != null) {
-                personneBDD.setPseudoPersonne(personne.getPseudoPersonne());
+            if (personne.getPseudo() != null) {
+                personneBDD.setPseudo(personne.getPseudo());
             }
 
-            if (personne.getChatsPersonne() != null) {
-                personneBDD.setChatsPersonne(personne.getChatsPersonne());
+            if (personne.getChats() != null) {
+                personneBDD.setChats(personne.getChats());
             }
 
-            if (personne.getCommentairesPersonne() != null) {
-                personneBDD.setCommentairesPersonne(personne.getCommentairesPersonne());
+            if (personne.getCommentaires() != null) {
+                personneBDD.setCommentaires(personne.getCommentaires());
             }
 
             personneRepository.save(personneBDD);

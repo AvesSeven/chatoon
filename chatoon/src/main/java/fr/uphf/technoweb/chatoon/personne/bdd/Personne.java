@@ -14,35 +14,35 @@ import java.util.List;
 public class Personne implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long idPersonne;
-    private String pseudoPersonne;
+    private Long id;
+    private String pseudo;
 //    private String passwordPersonne;
     @OneToMany(mappedBy= "personne", cascade = CascadeType.REMOVE)
     @Fetch(value=FetchMode.SELECT)
-    private List<Chat> chatsPersonne;
+    private List<Chat> chats;
     @OneToMany(fetch = FetchType.EAGER, mappedBy= "personne", cascade = CascadeType.REMOVE)
-    private List<Commentaire> commentairesPersonne;
+    private List<Commentaire> commentaires;
 
     public Personne() {
         super();
-        this.chatsPersonne = new ArrayList<>();
-        this.commentairesPersonne = new ArrayList<>();
+        this.chats = new ArrayList<>();
+        this.commentaires = new ArrayList<>();
     }
 
-    public Long getIdPersonne() {
-        return idPersonne;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdPersonne(Long idPersonne) {
-        this.idPersonne = idPersonne;
+    public void setId(Long idPersonne) {
+        this.id = idPersonne;
     }
 
-    public String getPseudoPersonne() {
-        return pseudoPersonne;
+    public String getPseudo() {
+        return pseudo;
     }
 
-    public void setPseudoPersonne(String pseudoPersonne) {
-        this.pseudoPersonne = pseudoPersonne;
+    public void setPseudo(String pseudoPersonne) {
+        this.pseudo = pseudoPersonne;
     }
 
 //    public String getPasswordPersonne() {
@@ -53,19 +53,19 @@ public class Personne implements Serializable {
 //        this.passwordPersonne = passwordPersonne;
 //    }
 
-    public List<Chat> getChatsPersonne() {
-        return chatsPersonne;
+    public List<Chat> getChats() {
+        return chats;
     }
 
-    public void setChatsPersonne(List<Chat> chatsPersonne) {
-        this.chatsPersonne = chatsPersonne;
+    public void setChats(List<Chat> chatsPersonne) {
+        this.chats = chatsPersonne;
     }
 
-    public List<Commentaire> getCommentairesPersonne() {
-        return commentairesPersonne;
+    public List<Commentaire> getCommentaires() {
+        return commentaires;
     }
 
-    public void setCommentairesPersonne(List<Commentaire> commentairesPersonne) {
-        this.commentairesPersonne = commentairesPersonne;
+    public void setCommentaires(List<Commentaire> commentairesPersonne) {
+        this.commentaires = commentairesPersonne;
     }
 }
