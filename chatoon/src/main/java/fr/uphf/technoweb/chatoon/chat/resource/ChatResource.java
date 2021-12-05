@@ -31,9 +31,15 @@ public class ChatResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ChatDetailDTO creerChat(Chat chatInput) {
-        chatRepository.save(chatInput);
-        return new ChatDetailDTO(chatInput);
+    public Response creerChat(Chat chatInput) {
+        Optional<Personne> personne = personneRepository.findById(chatInput.getPersonne().getId());
+
+        if(personne.isPresent()) {
+            chatInput.setPersonne(personne.get());
+            chatRepository.save(chatInput);
+            return Response.ok(new ChatDetailDTO(chatInput)).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).build();
     }
 
     @GET
@@ -87,7 +93,7 @@ public class ChatResource {
         if (chatRepository.findById(id).isPresent() && personneRepository.findById(chat.getPersonne().getId()).isPresent()) {
             chat.setId(id);
             chatRepository.save(chat);
-            return Response.ok(new ChatDTO(chat)).build();
+            return Response.ok(new ChatDetailDTO(chat)).build();
         }
         return Response.status(Response.Status.NOT_FOUND).build();
     }
