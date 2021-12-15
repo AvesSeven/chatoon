@@ -70,7 +70,6 @@ public class CommentaireService {
                 }
             }
 
-            System.out.println(commentaireDB);
             commentaireRepository.save(commentaireDB);
             return new CommentaireChatDTO(commentaireDB);
         }

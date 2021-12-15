@@ -24,7 +24,7 @@ public class CommentaireResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateCommentaire(@PathParam("idCommentaire") long id, Commentaire commentaire) {
         commentaire.setId(id);
-        if (commentaire.getMessage() != null && commentaire.getChat().getId() != null && commentaire.getPersonne().getId() != null) {
+        if (commentaire.getMessage() != null && commentaire.getChat() != null && commentaire.getPersonne() != null) {
             try {
                 return Response.ok(commentaireService.update(commentaire)).build();
             } catch (Exception e) {
