@@ -7,6 +7,9 @@ import fr.uphf.technoweb.chatoon.chat.dto.ChatDetailDTO;
 import fr.uphf.technoweb.chatoon.commentaire.bdd.Commentaire;
 import fr.uphf.technoweb.chatoon.commentaire.bdd.CommentaireRepository;
 import fr.uphf.technoweb.chatoon.commentaire.dto.CommentaireChatDTO;
+import fr.uphf.technoweb.chatoon.exceptions.ChatException;
+import fr.uphf.technoweb.chatoon.exceptions.CommentaireException;
+import fr.uphf.technoweb.chatoon.exceptions.PersonneException;
 import fr.uphf.technoweb.chatoon.personne.bdd.Personne;
 import fr.uphf.technoweb.chatoon.personne.bdd.PersonneRepository;
 import org.springframework.stereotype.Service;
@@ -30,7 +33,7 @@ public class ChatService {
     }
 
     @Transactional
-    public ChatDetailDTO createChat(Chat chat) throws Exception {
+    public ChatDetailDTO createChat(Chat chat) throws PersonneException {
         Optional<Personne> personne = personneRepository.findById(chat.getPersonne().getId());
 
         if (personne.isPresent()) {
@@ -38,7 +41,7 @@ public class ChatService {
             chatRepository.save(chat);
             return new ChatDetailDTO(chat);
         }
-        throw new Exception("Personne not found");
+        throw new PersonneException("Personne not found");
     }
 
     @Transactional
@@ -50,47 +53,55 @@ public class ChatService {
     }
 
     @Transactional
-    public ChatDetailDTO getChat(long id) throws Exception {
+    public ChatDetailDTO getChat(long id) throws ChatException {
         Optional<Chat> oChatDB = chatRepository.findById(id);
         if (oChatDB.isPresent()) {
             return new ChatDetailDTO(oChatDB.get());
         }
-        throw new Exception("Chat not found.");
+        throw new ChatException("Chat not found.");
     }
 
     @Transactional
-    public CommentaireChatDTO createCommentaire(Long idChat, CommentaireChatDTO commentaireChatDTO) throws Exception {
-        Optional<Chat> chat = chatRepository.findById(idChat);
-        Optional<Personne> personne = personneRepository.findById(commentaireChatDTO.getPersonne().getId());
+    public CommentaireChatDTO createCommentaire(Long idChat, Commentaire commentaire) throws ChatException, PersonneException {
+        Optional<Chat> optionalChat = chatRepository.findById(idChat);
+        Optional<Personne> optionalPersonne = personneRepository.findById(commentaire.getPersonne().getId());
 
-        if (chat.isPresent() && personne.isPresent()) {
-            Commentaire commentaire = new Commentaire();
-            commentaire.setMessage(commentaireChatDTO.getMessage());
-            commentaire.setChat(chat.get());
-            commentaire.setPersonne(personne.get());
-            commentaire.setDate(LocalDate.now());
-
-            commentaireRepository.save(commentaire);
-            return new CommentaireChatDTO(commentaire);
+        if(optionalChat.isEmpty()) {
+            throw new ChatException("Chat not found");
         }
-        throw new Exception("Commentaire not found");
+
+        if(optionalPersonne.isEmpty()) {
+            throw new PersonneException("Personne not found");
+        }
+
+        commentaire.setChat(optionalChat.get());
+        commentaire.setPersonne(optionalPersonne.get());
+        commentaire.setDate(LocalDate.now());
+
+        commentaireRepository.save(commentaire);
+        return new CommentaireChatDTO(commentaire);
     }
 
     @Transactional
-    public ChatDetailDTO update(Chat chat) throws Exception {
+    public ChatDetailDTO update(Chat chat) throws ChatException, PersonneException {
         Optional<Chat> optionalChat = chatRepository.findById(chat.getId());
         Optional<Personne> optionalPersonne = personneRepository.findById(chat.getPersonne().getId());
 
-        if (optionalChat.isPresent() && optionalPersonne.isPresent()) {
-            chat.setPersonne(optionalPersonne.get());
-            chatRepository.save(chat);
-            return new ChatDetailDTO(chat);
+        if(optionalChat.isEmpty()) {
+            throw new ChatException("Chat not found");
         }
-        throw new Exception("Chat not found");
+
+        if(optionalPersonne.isEmpty()) {
+            throw new PersonneException("Personne not found");
+        }
+
+        chat.setPersonne(optionalPersonne.get());
+        chatRepository.save(chat);
+        return new ChatDetailDTO(chat);
     }
 
     @Transactional
-    public ChatDetailDTO updatePartial(Chat chat) throws Exception {
+    public ChatDetailDTO updatePartial(Chat chat) throws ChatException, PersonneException, CommentaireException {
         Optional<Chat> oChatDB = chatRepository.findById(chat.getId());
 
         if (oChatDB.isPresent()) {
@@ -105,7 +116,7 @@ public class ChatService {
                 if (oPersonneDB.isPresent()) {
                     chatDB.setPersonne(oPersonneDB.get());
                 } else {
-                    throw new Exception("Personne not found");
+                    throw new PersonneException("Personne not found");
                 }
             }
 
@@ -116,7 +127,7 @@ public class ChatService {
                     if (oCommentaireDB.isPresent()) {
                         commentaires.add(oCommentaireDB.get());
                     } else {
-                        throw new Exception("Commentaire not found");
+                        throw new CommentaireException("Commentaire not found");
                     }
                 }
                 chatDB.setCommentaires(commentaires);
@@ -134,14 +145,14 @@ public class ChatService {
             return new ChatDetailDTO(chatDB);
         }
 
-        throw new Exception("Chat not found");
+        throw new ChatException("Chat not found");
     }
 
     @Transactional
-    public void delete(long id) throws Exception {
+    public void delete(long id) throws ChatException {
         Optional<Chat> oChatDB = chatRepository.findById(id);
         if (oChatDB.isEmpty()) {
-            throw new Exception("Chat not found");
+            throw new ChatException("Chat not found");
         }
         chatRepository.delete(oChatDB.get());
     }

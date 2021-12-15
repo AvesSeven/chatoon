@@ -1,5 +1,6 @@
 package fr.uphf.technoweb.chatoon.personne.service;
 
+import fr.uphf.technoweb.chatoon.exceptions.PersonneException;
 import fr.uphf.technoweb.chatoon.personne.bdd.Personne;
 import fr.uphf.technoweb.chatoon.personne.bdd.PersonneRepository;
 import fr.uphf.technoweb.chatoon.personne.dto.PersonneDTO;
@@ -29,12 +30,12 @@ public class PersonneService {
     }
 
     @Transactional
-    public PersonneDetailDTO getPersonne(long id) throws Exception {
+    public PersonneDetailDTO getPersonne(long id) throws PersonneException {
         Optional<Personne> oPersonneDB = personneRepository.findById(id);
         if (oPersonneDB.isPresent()) {
             return new PersonneDetailDTO(oPersonneDB.get());
         }
-        throw new Exception("Personne not found.");
+        throw new PersonneException("Personne not found.");
     }
 
     @Transactional
@@ -46,17 +47,18 @@ public class PersonneService {
     }
 
     @Transactional
-    public PersonneDetailDTO update(Personne personne) throws Exception {
+    public PersonneDetailDTO update(Personne personne) throws PersonneException {
         if (personneRepository.findById(personne.getId()).isPresent()) {
             personneRepository.save(personne);
             return new PersonneDetailDTO(personne);
         }
-        throw new Exception("Personne not found");
+        throw new PersonneException("Personne not found");
     }
 
     @Transactional
-    public PersonneDetailDTO updatePartial(Personne personne) throws Exception {
+    public PersonneDetailDTO updatePartial(Personne personne) throws PersonneException {
         Optional<Personne> oPersonneDB = personneRepository.findById(personne.getId());
+
         if (oPersonneDB.isPresent()) {
             Personne personneDB = oPersonneDB.get();
             if (personne.getPseudo() != null) {
@@ -71,14 +73,14 @@ public class PersonneService {
             personneRepository.save(personneDB);
             return new PersonneDetailDTO(personne);
         }
-        throw new Exception("Personne not found");
+        throw new PersonneException("Personne not found");
     }
 
     @Transactional
-    public void delete(long id) throws Exception {
+    public void delete(long id) throws PersonneException {
         Optional<Personne> oPersonneDB = personneRepository.findById(id);
         if (oPersonneDB.isEmpty()) {
-            throw new Exception("Personne not found");
+            throw new PersonneException("Personne not found");
         }
         personneRepository.delete(oPersonneDB.get());
     }

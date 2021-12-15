@@ -2,7 +2,10 @@ package fr.uphf.technoweb.chatoon.chat.resource;
 
 import fr.uphf.technoweb.chatoon.chat.bdd.Chat;
 import fr.uphf.technoweb.chatoon.chat.service.ChatService;
-import fr.uphf.technoweb.chatoon.commentaire.dto.CommentaireChatDTO;
+import fr.uphf.technoweb.chatoon.commentaire.bdd.Commentaire;
+import fr.uphf.technoweb.chatoon.exceptions.ChatException;
+import fr.uphf.technoweb.chatoon.exceptions.CommentaireException;
+import fr.uphf.technoweb.chatoon.exceptions.PersonneException;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.*;
@@ -26,7 +29,7 @@ public class ChatResource {
         if (chat.getNom() != null) {
             try {
                 return Response.ok(chatService.createChat(chat)).build();
-            } catch (Exception e) {
+            } catch (PersonneException e) {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
         }
@@ -45,7 +48,7 @@ public class ChatResource {
     public Response getChatById(@PathParam("idChat") Long id) {
         try {
             return Response.ok(chatService.getChat(id)).build();
-        } catch (Exception e) {
+        } catch (ChatException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
@@ -54,11 +57,11 @@ public class ChatResource {
     @Path("{idChat}/commentaires")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response creerCommentaire(@PathParam("idChat") Long idChat, CommentaireChatDTO commentaireChatDTO) {
-        if (commentaireChatDTO.getMessage() != null && commentaireChatDTO.getPersonne() != null) {
+    public Response creerCommentaire(@PathParam("idChat") Long idChat, Commentaire commentaire) {
+        if (commentaire.getMessage() != null && commentaire.getPersonne() != null) {
             try {
-                return Response.ok(chatService.createCommentaire(idChat, commentaireChatDTO)).build();
-            } catch (Exception e) {
+                return Response.ok(chatService.createCommentaire(idChat, commentaire)).build();
+            } catch (ChatException | PersonneException e) {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
         }
@@ -74,7 +77,7 @@ public class ChatResource {
         if (chat.getNom() != null && chat.getPersonne() != null) {
             try {
                 return Response.ok(chatService.update(chat)).build();
-            } catch (Exception e) {
+            } catch (ChatException | PersonneException e) {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
         }
@@ -89,7 +92,7 @@ public class ChatResource {
         chat.setId(id);
         try {
             return Response.ok(chatService.updatePartial(chat)).build();
-        } catch (Exception e) {
+        } catch (ChatException | PersonneException | CommentaireException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
@@ -101,7 +104,7 @@ public class ChatResource {
         try {
             chatService.delete(id);
             return Response.noContent().build();
-        } catch (Exception e) {
+        } catch (ChatException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }

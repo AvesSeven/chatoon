@@ -2,6 +2,9 @@ package fr.uphf.technoweb.chatoon.commentaire.resource;
 
 import fr.uphf.technoweb.chatoon.commentaire.service.CommentaireService;
 import fr.uphf.technoweb.chatoon.commentaire.bdd.Commentaire;
+import fr.uphf.technoweb.chatoon.exceptions.ChatException;
+import fr.uphf.technoweb.chatoon.exceptions.CommentaireException;
+import fr.uphf.technoweb.chatoon.exceptions.PersonneException;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.*;
@@ -27,7 +30,7 @@ public class CommentaireResource {
         if (commentaire.getMessage() != null && commentaire.getChat() != null && commentaire.getPersonne() != null) {
             try {
                 return Response.ok(commentaireService.update(commentaire)).build();
-            } catch (Exception e) {
+            } catch (PersonneException | CommentaireException | ChatException e) {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
         }
@@ -42,7 +45,7 @@ public class CommentaireResource {
         commentaire.setId(id);
         try {
             return Response.ok(commentaireService.updatePartial(commentaire)).build();
-        } catch (Exception e) {
+        } catch (PersonneException | CommentaireException | ChatException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
@@ -54,7 +57,7 @@ public class CommentaireResource {
         try {
             commentaireService.delete(id);
             return Response.noContent().build();
-        } catch (Exception e) {
+        } catch (CommentaireException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }

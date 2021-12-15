@@ -1,5 +1,6 @@
 package fr.uphf.technoweb.chatoon.personne.resource;
 
+import fr.uphf.technoweb.chatoon.exceptions.PersonneException;
 import fr.uphf.technoweb.chatoon.personne.service.PersonneService;
 import fr.uphf.technoweb.chatoon.personne.bdd.Personne;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,7 +41,7 @@ public class PersonneResource {
     public Response getPersonneById(@PathParam("idPersonne") Long id) {
         try {
             return Response.ok(personneService.getPersonne(id)).build();
-        } catch (Exception e) {
+        } catch (PersonneException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
@@ -54,7 +55,7 @@ public class PersonneResource {
         if (personne.getPseudo() != null) {
             try {
                 return Response.ok(personneService.update(personne)).build();
-            } catch (Exception e) {
+            } catch (PersonneException e) {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
         }
@@ -69,7 +70,7 @@ public class PersonneResource {
         personne.setId(id);
         try {
             return Response.ok(personneService.updatePartial(personne)).build();
-        } catch (Exception e) {
+        } catch (PersonneException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
@@ -81,7 +82,7 @@ public class PersonneResource {
         try {
             personneService.delete(id);
             return Response.noContent().build();
-        } catch (Exception e) {
+        } catch (PersonneException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
