@@ -1,6 +1,6 @@
 package fr.uphf.technoweb.chatoon.personne.resource;
 
-import fr.uphf.technoweb.chatoon.personne.PersonneService;
+import fr.uphf.technoweb.chatoon.personne.service.PersonneService;
 import fr.uphf.technoweb.chatoon.personne.bdd.Personne;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -67,14 +67,11 @@ public class PersonneResource {
     @Path("{idPersonne}")
     public Response updatePersonne(@PathParam("idPersonne") Long id, Personne personne) {
         personne.setId(id);
-        if (personne.getPseudo() != null) {
-            try {
-                return Response.ok(personneService.updatePartial(personne)).build();
-            } catch (Exception e) {
-                return Response.status(Response.Status.NOT_FOUND).build();
-            }
+        try {
+            return Response.ok(personneService.updatePartial(personne)).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.status(Response.Status.BAD_REQUEST).build();
     }
 
     @DELETE

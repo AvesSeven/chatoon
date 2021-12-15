@@ -1,47 +1,37 @@
 package fr.uphf.technoweb.chatoon.commentaire.resource;
 
-import fr.uphf.technoweb.chatoon.chat.bdd.Chat;
-import fr.uphf.technoweb.chatoon.chat.bdd.ChatRepository;
+import fr.uphf.technoweb.chatoon.commentaire.service.CommentaireService;
 import fr.uphf.technoweb.chatoon.commentaire.bdd.Commentaire;
-import fr.uphf.technoweb.chatoon.commentaire.bdd.CommentaireRepository;
-import fr.uphf.technoweb.chatoon.commentaire.dto.CommentaireChatDTO;
-import fr.uphf.technoweb.chatoon.personne.bdd.Personne;
-import fr.uphf.technoweb.chatoon.personne.bdd.PersonneRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.time.LocalDate;
-import java.util.Optional;
 
+@RestController
 @Path("commentaires")
 public class CommentaireResource {
-    @Autowired
-    private CommentaireRepository commentaireRepository;
-    @Autowired
-    private PersonneRepository personneRepository;
-    @Autowired
-    private ChatRepository chatRepository;
+
+    private final CommentaireService commentaireService;
+
+    public CommentaireResource(CommentaireService commentaireService) {
+        this.commentaireService = commentaireService;
+    }
 
     @PUT
     @Path("{idCommentaire}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateCommentaire(@PathParam("idCommentaire") long id, Commentaire commentaire) {
-        Optional<Commentaire> optionalCommentaire = commentaireRepository.findById(id);
-        Optional<Personne> optionalPersonne = personneRepository.findById(commentaire.getPersonne().getId());
-        Optional<Chat> optionalChat = chatRepository.findById(commentaire.getChat().getId());
-
-        if (optionalCommentaire.isPresent() && optionalPersonne.isPresent() && optionalChat.isPresent()) {
-            commentaire.setId(id);
-            commentaire.setDate(LocalDate.now());
-            commentaire.setPersonne(optionalPersonne.get());
-            commentaire.setChat(optionalChat.get());
-            commentaireRepository.save(commentaire);
-            return Response.ok(new CommentaireChatDTO(commentaire)).build();
+        commentaire.setId(id);
+        if (commentaire.getMessage() != null && commentaire.getChat().getId() != null && commentaire.getPersonne().getId() != null) {
+            try {
+                return Response.ok(commentaireService.update(commentaire)).build();
+            } catch (Exception e) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
         }
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return Response.status(Response.Status.BAD_REQUEST).build();
     }
 
     @PATCH
@@ -49,29 +39,23 @@ public class CommentaireResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{idCommentaire}")
     public Response updateCommentaire(@PathParam("idCommentaire") Long id, Commentaire commentaire) {
-        Optional<Commentaire> optional = commentaireRepository.findById(id);
-
-        if (optional.isPresent()) {
-            Commentaire commentaireBDD = optional.get();
-            if (commentaire.getMessage() != null) {
-                commentaireBDD.setMessage(commentaire.getMessage());
-            }
-
-            commentaireRepository.save(commentaireBDD);
-            return Response.ok(new CommentaireChatDTO(commentaireBDD)).build();
+        commentaire.setId(id);
+        try {
+            return Response.ok(commentaireService.updatePartial(commentaire)).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
-
-        return Response.status(Response.Status.NOT_FOUND).build();
     }
 
     @DELETE
     @Path("{idCommentaire}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteCommentaire(@PathParam("idCommentaire") Long idCommentaire) {
-        if (commentaireRepository.findById(idCommentaire).isPresent()) {
-            commentaireRepository.deleteById(idCommentaire);
+    public Response deleteCommentaire(@PathParam("idCommentaire") Long id) {
+        try {
+            commentaireService.delete(id);
             return Response.noContent().build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.status(Response.Status.NOT_FOUND).build();
     }
 }

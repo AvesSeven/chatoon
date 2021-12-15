@@ -1,4 +1,4 @@
-package fr.uphf.technoweb.chatoon.personne;
+package fr.uphf.technoweb.chatoon.personne.service;
 
 import fr.uphf.technoweb.chatoon.personne.bdd.Personne;
 import fr.uphf.technoweb.chatoon.personne.bdd.PersonneRepository;
