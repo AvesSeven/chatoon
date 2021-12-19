@@ -16,7 +16,6 @@ public class Personne implements Serializable {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String pseudo;
-//    private String passwordPersonne;
     @OneToMany(mappedBy= "personne", cascade = CascadeType.REMOVE)
     private List<Chat> chats;
     @OneToMany(fetch = FetchType.EAGER, mappedBy= "personne", cascade = CascadeType.REMOVE)
@@ -43,14 +42,6 @@ public class Personne implements Serializable {
     public void setPseudo(String pseudoPersonne) {
         this.pseudo = pseudoPersonne;
     }
-
-//    public String getPasswordPersonne() {
-//        return passwordPersonne;
-//    }
-//
-//    public void setPasswordPersonne(String passwordPersonne) {
-//        this.passwordPersonne = passwordPersonne;
-//    }
 
     public List<Chat> getChats() {
         return chats;
