@@ -30,7 +30,7 @@ Via ces deux parties nous pouvons effectuer les actions suivantes :
                     }
                 }
 
-    - Récuperer l'ensemble des chats ;
+    - Récupérer l'ensemble des chats ;
     - Récupérer un chat spécifique via son identifiant :
         - Pour la partie back, l'identifiant est passé dans le route ;
     - Supprimer un chat via son identifiant :
@@ -72,7 +72,7 @@ Via ces deux parties nous pouvons effectuer les actions suivantes :
                     "pseudo": "Toto"
                 }
 
-    - Récuperer l'ensemble des personnes ;
+    - Récupérer l'ensemble des personnes ;
     - Récupérer une personne spécifique via son identifiant :
         - Pour la partie back, l'identifiant est passé dans le route ;
     - Supprimer une personne via son identifiant :
