@@ -15,7 +15,7 @@ Cela va ainsi permettre de démarrer la partie back de Chatoon ;
 
 ## Comment insérer de nouvelles données ?
 
-L'ajout de nouvelles données peut s'effectuer de deux manière différentes, soit via la partie back directement et un outil tel que Postman, soit via la partie front.
+L'ajout de nouvelles données peut s'effectuer de deux manière différentes, soit via la partie back et un outil tel que Postman, soit via la partie front directement.
 
 Via ces deux parties nous pouvons effectuer les actions suivantes :
 - Pour les chats :
