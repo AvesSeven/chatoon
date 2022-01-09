@@ -41,7 +41,7 @@ public class CommentaireResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{idCommentaire}")
-    public Response updateCommentaire(@PathParam("idCommentaire") Long id, Commentaire commentaire) {
+    public Response updatePartialCommentaire(@PathParam("idCommentaire") long id, Commentaire commentaire) {
         commentaire.setId(id);
         try {
             return Response.ok(commentaireService.updatePartial(commentaire)).build();
@@ -49,6 +49,7 @@ public class CommentaireResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
+
 
     @DELETE
     @Path("{idCommentaire}")

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e8922208-171f-467c-915e-9ecc52b0da0d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/chatoon/src/main/resources/public/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hsqldb-2.5.1/hsqldb/chatoon/mydb.lck" beforeDir="false" afterPath="$PROJECT_DIR$/hsqldb-2.5.1/hsqldb/chatoon/mydb.lck" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hsqldb-2.5.1/hsqldb/chatoon/mydb.log" beforeDir="false" afterPath="$PROJECT_DIR$/hsqldb-2.5.1/hsqldb/chatoon/mydb.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hsqldb-2.5.1/hsqldb/chatoon/mydb.properties" beforeDir="false" afterPath="$PROJECT_DIR$/hsqldb-2.5.1/hsqldb/chatoon/mydb.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hsqldb-2.5.1/hsqldb/chatoon/mydb.script" beforeDir="false" afterPath="$PROJECT_DIR$/hsqldb-2.5.1/hsqldb/chatoon/mydb.script" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="20rIivlrRMlkYokaZTNPpNdeZsG" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration name="ChatoonApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="SPRING_BOOT_MAIN_CLASS" value="fr.uphf.technoweb.chatoon.ChatoonApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e8922208-171f-467c-915e-9ecc52b0da0d" name="Changes" comment="" />
+      <created>1636796411102</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1636796411102</updated>
+      <workItem from="1636796414444" duration="158000" />
+      <workItem from="1641372543745" duration="2122000" />
+      <workItem from="1641400451310" duration="94000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

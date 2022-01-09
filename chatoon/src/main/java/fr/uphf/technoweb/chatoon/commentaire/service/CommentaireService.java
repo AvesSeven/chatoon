@@ -66,10 +66,12 @@ public class CommentaireService {
 
             if(commentaire.getPersonne() != null) {
                 Optional<Personne> oPersonneDB = personneRepository.findById(commentaire.getPersonne().getId());
-                oPersonneDB.ifPresent(commentaireDB::setPersonne);
-            }
-            else {
-                throw new PersonneException("Personne not found");
+                if(oPersonneDB.isPresent()) {
+                    oPersonneDB.ifPresent(commentaireDB::setPersonne);
+                }
+                else {
+                    throw new PersonneException("Personne not found");
+                }
             }
 
             if(commentaire.getChat() != null) {
