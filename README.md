@@ -6,11 +6,11 @@ Chatoon est un blog de chats qui permet à chaque propriétaire de chat, qui le 
 
 Afin de lancer Chatoon, il suffit :
 
-- De lancer le terminal dans le dossier chatoon qui se trouve dans hsqldb-2.5.1/hsqldb et d'indiquer la ligne de commande suivante : 
+- De lancer le terminal dans le dossier chatoon qui se trouve dans hsqldb-2.5.1/hsqldb et d'indiquer la ligne de commande suivante : "java -cp ../lib/hsqldb.jar org.hsqldb.server.Server --database.0 file:mydb --dbname.0 chatBDD". Cela va ainsi permettre de démarrer la partie back de Chatoon ;
 
-java -cp ../lib/hsqldb.jar org.hsqldb.server.Server --database.0 file:mydb --dbname.0 chatBDD
+- De lancer le projet back via votre IDE favori ;
 
-Cela va ainsi permettre de démarrer la partie back de Chatoon ;
+- De double cliquer sur le fichier "index.html" contenu dans le dossier "public" afin de lancer la partie front (celle-ci va automatiquement se connecter avec la partie back).
 
 
 ## Comment insérer de nouvelles données ?
